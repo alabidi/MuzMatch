@@ -8,14 +8,14 @@ db=client.muzmatch
 
 trim=db.trim
 
-dUK=pickle.load(open('dUK.pkl','rb'))
+dUK=pickle.load(open('../repos/dUK.pkl','rb'))
 i=0
 
 trim = db.trim
 dlikesMUK = {}
 dlikesFUK = {}
 for key in dUK.keys():
-    if dUK['age']>20 and dUK['age']<60:
+    if dUK[key]['age']>20 and dUK[key]['age']<60:
         t = trim.find({'memberID': key}, {"who_i_liked": 1})
         a = trim.find({'memberID': key}, {"activeSince": 1})
         try:
