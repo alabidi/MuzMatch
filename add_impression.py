@@ -15,7 +15,7 @@ trim = db.trim
 dlikesMUK = {}
 dlikesFUK = {}
 for key in dUK.keys():
-    if dUK[key]['age']>20 and dUK[key]['age']<60:
+
         t = trim.find({'memberID': key}, {"who_i_liked": 1})
         a = trim.find({'memberID': key}, {"activeSince": 1})
         try:

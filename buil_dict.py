@@ -12,6 +12,7 @@ def retro_dictify(d, doc, grumps,dUK):
     age = doc['age']
 
     if age is not None and 'who_i_liked' in doc.keys():
+
         ethnic = doc['ethnicGroupingName']
         gender = doc['gender']
         status = doc['statusMessage']
@@ -27,20 +28,30 @@ def retro_dictify(d, doc, grumps,dUK):
         d[mid]['LD'] = lD
         d[mid]['country'] = country
         d[mid]['numLikes']=len(doc['who_i_liked'])
+        if 'who_i_passed' in doc.keys():
+            d[mid]['passed']=get_passes(doc['who_i_passed'])
+        else:
+            d[mid]['passed']=[]
+
         if country=='United Kingdom':
             dUK[mid]=d[mid]
     elif age is not None and 'who_i_liked' not in doc.keys():
         grumps.append(mid)
     return d,dUK, grumps
 
-
+def get_passes(d):
+    p=[]
+    for pp in d:
+        p.append(pp.keys())
+    return p
 
 
 d={}
 dUK={}
 grumps=[] #grumps are people who dont like anyone
 for coll in collections:
-    for doc in coll.find({},{'memberID':1,'age':1,'ethnicGroupingName':1,'ethnicOriginCountryName':1,'gender':1,'statusMessage':1,'longDescription':1,'countryName':1,'who_i_liked':1}):
+    print(coll)
+    for doc in coll.find({},{'memberID':1,'age':1,'ethnicGroupingName':1,'ethnicOriginCountryName':1,'gender':1,'statusMessage':1,'longDescription':1,'countryName':1,'who_i_liked':1,'who_i_passed':1}):
         d,dUK,grumps=retro_dictify(d,doc,grumps,dUK)
 
 
